@@ -1,0 +1,7 @@
+{
+  "name": "HoopsManager - Collegiate Basketball Analytics & Management",
+  "description": "A comprehensive basketball management dashboard for collegiate teams, featuring player analytics, game scheduling, and AI-powered scouting reports.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
