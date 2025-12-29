@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
@@ -8,6 +9,9 @@ async function bootstrap() {
 
   // 重要：设置全局前缀以区分前端路由和 API 路由
   app.setGlobalPrefix('api');
+
+  // 全局验证与转换
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
 
   const config = new DocumentBuilder()
     .setTitle('高校篮球信息管理系统 API')
@@ -30,5 +34,5 @@ async function bootstrap() {
   console.log('API 文档地址: http://localhost:3000/api/docs');
 }
 
-// 模拟启动指令
-// bootstrap();
+// 启动服务
+bootstrap();

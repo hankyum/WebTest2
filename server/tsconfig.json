@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "rootDir": "./",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "../pages",
+    "../store",
+    "../services",
+    "../App.tsx",
+    "../index.tsx",
+    "../index.html",
+    "../vite.config.ts",
+    "node_modules",
+    "dist",
+    "**/*.spec.ts"
+  ]
+}

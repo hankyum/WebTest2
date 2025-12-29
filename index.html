@@ -35,6 +35,34 @@
 </script>
 </head>
 <body>
-    <div id="root"></div>
+  <div id="root">
+    <div style="padding:32px;color:#fff;font-family:Inter, sans-serif;max-width:800px;margin:48px auto;">
+      <h1 style="margin:0 0 8px;font-size:22px">HoopsManager</h1>
+      <p style="margin:0 0 12px;color:#cbd5e1">前端尚未启动或未构建，因此页面为空。</p>
+      <p style="margin:0 0 6px;color:#94a3b8">开发模式：运行 <code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">npm run dev</code> 在 Vite 中启动前端。</p>
+      <p style="margin:0 0 6px;color:#94a3b8">构建并由后端托管：运行 <code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">npm run build:client</code>，然后在生产模式重启后端（<code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">NODE_ENV=production npm run start:prod</code>）。</p>
+    </div>
+  </div>
+  <script type="module" src="/index.tsx"></script>
+  <script>
+    // Fallback: if the React app does not mount (no client bundle running), show a helpful message.
+    (function() {
+      const root = document.getElementById('root');
+      setTimeout(() => {
+        if (!root) return;
+        const hasContent = root.innerHTML && root.innerHTML.trim() !== '';
+        if (!hasContent) {
+          root.innerHTML = `
+            <div style="padding:32px;color:#fff;font-family:Inter, sans-serif;max-width:800px;margin:48px auto;">
+              <h1 style="margin:0 0 8px;font-size:22px">HoopsManager</h1>
+              <p style="margin:0 0 12px;color:#cbd5e1">前端尚未启动或未构建，因此页面为空。</p>
+              <p style="margin:0 0 6px;color:#94a3b8">开发模式：运行 <code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">npm run dev</code> 在 Vite 中启动前端。</p>
+              <p style="margin:0 0 6px;color:#94a3b8">构建并由后端托管：运行 <code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">npm run build:client</code>，然后在生产模式重启后端（<code style="background:#0b1220;padding:2px 6px;border-radius:4px;color:#fff">NODE_ENV=production npm run start:prod</code>）。</p>
+            </div>
+          `;
+        }
+      }, 600);
+    })();
+  </script>
 </body>
 </html>

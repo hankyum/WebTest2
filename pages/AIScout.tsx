@@ -8,7 +8,6 @@ import {
   UserCheck as UserIcon 
 } from 'lucide-react';
 import { mockPlayers } from '../store/mockData';
-import { geminiService } from '../services/gemini';
 import { Player } from '../types';
 
 const AIScout: React.FC = () => {
@@ -21,10 +20,17 @@ const AIScout: React.FC = () => {
     setLoading(true);
     setReport(null);
     try {
-      const result = await geminiService.generateScoutingReport(selectedPlayer);
-      setReport(result);
+      const res = await fetch('/api/ai/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ player: selectedPlayer }),
+      });
+      const data = await res.json();
+      if (data?.report) setReport(data.report);
+      else setReport('未能生成报告：服务返回错误');
     } catch (error) {
       console.error(error);
+      setReport('请求 AI 服务时出错，请检查服务器日志。');
     } finally {
       setLoading(false);
     }

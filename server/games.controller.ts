@@ -1,44 +1,34 @@
 
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Game } from './schemas';
+import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
+import { GamesService } from './games.service';
+import { CreateGameDto } from './dtos/create-game.dto';
+import { UpdateScoreDto } from './dtos/update-score.dto';
 
 @ApiTags('Games')
 @Controller('games')
 export class GamesController {
-  constructor(
-    @InjectModel(Game.name) private gameModel: Model<Game>
-  ) {}
+  constructor(private readonly gamesService: GamesService) {}
 
   @Get()
   @ApiOperation({ summary: '获取完整赛程' })
   async findAll() {
-    return this.gameModel.find().sort({ date: 1 }).exec();
+    return this.gamesService.findAll();
   }
 
   @Post()
   @ApiOperation({ summary: '安排新赛事' })
-  async create(@Body() gameDto: any) {
-    const newGame = new this.gameModel(gameDto);
-    return newGame.save();
+  @ApiCreatedResponse({ description: '赛事已创建' })
+  async create(@Body() gameDto: CreateGameDto) {
+    return this.gamesService.create(gameDto);
   }
 
   @Patch(':id/score')
   @ApiOperation({ summary: '更新比赛比分' })
   async updateScore(
     @Param('id') id: string,
-    @Body() scoreDto: { homeScore: number; awayScore: number }
+    @Body() scoreDto: UpdateScoreDto
   ) {
-    return this.gameModel.findByIdAndUpdate(
-      id,
-      { 
-        homeScore: scoreDto.homeScore, 
-        awayScore: scoreDto.awayScore,
-        status: 'COMPLETED' 
-      },
-      { new: true }
-    ).exec();
+    return this.gamesService.updateScore(id, scoreDto.homeScore, scoreDto.awayScore);
   }
 }
